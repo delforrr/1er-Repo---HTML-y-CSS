@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "title": "Algebra Lineal y Geometría Analítica",
+        "author": "María Mercedes Colombo",
+        "subject": "Matemática",
+        "description": "Fundamentos de la asignatura, libro recomendado de la cátedra",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJvb42rgBE9z2wN0inkcZLnyQTRS1KS3pb6g&s"
+    },
+    {
+        "id": 2,
+        "title": "Clean Code",
+        "author": "Robert C. Martin",
+        "subject": "Programación",
+        "description": "Un manual de buenas prácticas para el desarrollo de software.",
+        "image": "https://panamericana.vtexassets.com/arquivos/ids/541472-800-auto?v=638515531746530000&width=800&height=auto&aspect=true"
+    },
+    {
+        "id": 3,
+        "title": "Fundamentos de Sistemas Operativos",
+        "author": "Silberschatz, Galvin y Gagne",
+        "subject": "Sistemas Operativos",
+        "description": "Libro de referencia para la materia Sistemas Operativos",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQk1cxgvbD2wfW9sPxfUSzPkxegt9Hz1GSueg&s"
+    }
+]
