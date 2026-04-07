@@ -1,9 +1,8 @@
 export const ui = {
-    // --- Rendering ---
     createBookCard(book, isFavorite, callbacks, options = { showAdminActions: false }) {
         const card = document.createElement('div');
         card.className = 'bg-white dark:bg-slate-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl flex flex-col h-full border border-gray-100 dark:border-slate-700 group';
-        
+
         const adminOverlay = options.showAdminActions ? `
             <!-- Action Overlay -->
             <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 z-10">
@@ -44,7 +43,6 @@ export const ui = {
             </div>
         `;
 
-        // Event listeners
         if (options.showAdminActions) {
             card.querySelector('.edit-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -55,7 +53,7 @@ export const ui = {
                 callbacks.onDelete(book.id);
             });
         }
-        
+
         card.querySelector('.favorite-btn').addEventListener('click', (e) => {
             e.stopPropagation();
             callbacks.onToggleFavorite(book.id);
@@ -67,7 +65,7 @@ export const ui = {
     renderBooks(books, favorites, container, countEl, callbacks, options = { showAdminActions: false }) {
         if (!container) return;
         container.innerHTML = '';
-        
+
         if (books.length === 0) {
             container.innerHTML = `
                 <div class="col-span-full text-center py-20">
@@ -86,13 +84,12 @@ export const ui = {
         }
     },
 
-    // --- Modal Management ---
     openModal(modalId, title = 'Cargar Nuevo Libro', book = null) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
         const modalTitle = modal.querySelector('h3');
         const form = modal.querySelector('form');
-        
+
         modalTitle.textContent = title;
         if (book) {
             form.dataset.editId = book.id;
@@ -118,7 +115,7 @@ export const ui = {
         }
     },
 
-    // --- Theme ---
+    // Tema
     updateThemeIcons(isDark) {
         const icons = [document.getElementById('theme-icon'), document.getElementById('theme-icon-mobile')];
         icons.forEach(icon => {
@@ -128,7 +125,7 @@ export const ui = {
         });
     },
 
-    // --- Toasts ---
+    // Toasts
     showToast(msg, type = 'success') {
         const toast = document.getElementById('toast');
         if (!toast) return;
@@ -137,7 +134,7 @@ export const ui = {
 
         toastMsg.textContent = msg;
         toastIcon.className = type === 'success' ? 'fas fa-check-circle text-utn-green' : 'fas fa-exclamation-circle text-red-500';
-        
+
         toast.classList.remove('translate-y-20', 'opacity-0');
         setTimeout(() => {
             toast.classList.add('translate-y-20', 'opacity-0');

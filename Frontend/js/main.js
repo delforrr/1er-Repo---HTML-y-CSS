@@ -1,16 +1,14 @@
 import { api } from './api.js';
 import { ui } from './ui.js';
 
-// --- State ---
+// State 
 let allBooks = [];
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let currentCategory = 'Todos';
 let searchQuery = '';
 
-// Determine if we should show Edit/Delete based on filename
+// Edit/Delete basado en ubicación
 const isLibrosPage = window.location.pathname.includes('libros.html');
-
-// --- Core Functions ---
 
 async function loadBooks() {
     try {
@@ -22,6 +20,7 @@ async function loadBooks() {
     }
 }
 
+// Filtro y renderizado
 function filterAndRender() {
     const filtered = allBooks.filter(book => {
         const title = book.title ? book.title.toLowerCase() : '';
@@ -29,12 +28,12 @@ function filterAndRender() {
         const subject = book.subject ? book.subject.toLowerCase() : '';
         const search = searchQuery.toLowerCase();
 
-        const matchesSearch = title.includes(search) || 
-                            author.includes(search) || 
-                            subject.includes(search);
-                            
-        const matchesCategory = currentCategory === 'Todos' || 
-                              (currentCategory === 'Favoritos' ? favorites.includes(book.id) : book.subject === currentCategory);
+        const matchesSearch = title.includes(search) ||
+            author.includes(search) ||
+            subject.includes(search);
+
+        const matchesCategory = currentCategory === 'Todos' ||
+            (currentCategory === 'Favoritos' ? favorites.includes(book.id) : book.subject === currentCategory);
         return matchesSearch && matchesCategory;
     });
 
@@ -45,8 +44,7 @@ function filterAndRender() {
     }, { showAdminActions: isLibrosPage });
 }
 
-// --- Event Handlers ---
-
+// Handlers
 async function handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -94,18 +92,17 @@ function handleToggleFavorite(id) {
     filterAndRender();
 }
 
-// --- Init ---
-
+// Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme setup
-    const isDark = localStorage.getItem('theme') === 'dark' || 
-                 (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    // Temas
+    const isDark = localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
     if (isDark) {
         document.documentElement.classList.add('dark');
         ui.updateThemeIcons(true);
     }
 
-    // Search and Filters
+    // Buscador y filtros
     document.getElementById('search-input')?.addEventListener('input', (e) => {
         searchQuery = e.target.value;
         filterAndRender();
@@ -114,26 +111,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.category-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.category-btn').forEach(b => {
-                // Reset to default styles
+                // Reset
                 b.classList.remove('active', 'bg-utn-maroon', 'text-white', 'border-utn-maroon');
                 b.classList.add('bg-white', 'dark:bg-slate-900', 'text-gray-700', 'dark:text-slate-300', 'border-gray-300', 'dark:border-slate-600');
             });
-            // Apply active styles
+            // Estilos activos
             btn.classList.add('active', 'bg-utn-maroon', 'text-white', 'border-utn-maroon');
             btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-gray-700', 'dark:text-slate-300', 'border-gray-300', 'dark:border-slate-600');
-            
+
             currentCategory = btn.dataset.category;
             filterAndRender();
         });
     });
 
-    // Modal Events
+    // Modal Eventos
     document.getElementById('open-add-book-modal')?.addEventListener('click', () => ui.openModal('add-book-modal'));
     document.getElementById('close-modal')?.addEventListener('click', () => ui.closeModal('add-book-modal'));
     document.querySelector('.modal-overlay')?.addEventListener('click', () => ui.closeModal('add-book-modal'));
     document.getElementById('add-book-form')?.addEventListener('submit', handleFormSubmit);
 
-    // Theme Toggle
+    // Toggle Temas
     const toggleTheme = () => {
         document.documentElement.classList.toggle('dark');
         const isDark = document.documentElement.classList.contains('dark');
